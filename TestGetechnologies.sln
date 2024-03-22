@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGetechnologies.API", "TestGetechnologies.API\TestGetechnologies.API.csproj", "{CDBCFE12-A301-487F-B707-56C0899E0ED0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestGetechnologies.API", "TestGetechnologies.API\TestGetechnologies.API.csproj", "{CDBCFE12-A301-487F-B707-56C0899E0ED0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGetechnologies.Shared", "TestGetechnologies.Shared\TestGetechnologies.Shared.csproj", "{33CB066B-1320-420A-86A0-B2E0DC34026D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{CDBCFE12-A301-487F-B707-56C0899E0ED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDBCFE12-A301-487F-B707-56C0899E0ED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDBCFE12-A301-487F-B707-56C0899E0ED0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33CB066B-1320-420A-86A0-B2E0DC34026D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33CB066B-1320-420A-86A0-B2E0DC34026D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33CB066B-1320-420A-86A0-B2E0DC34026D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33CB066B-1320-420A-86A0-B2E0DC34026D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

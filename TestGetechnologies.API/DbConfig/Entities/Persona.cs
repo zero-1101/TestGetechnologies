@@ -4,7 +4,7 @@ namespace TestGetechnologies.API.DbConfig.Entities
 {
     public class Persona
     {
-        [Required]
+        [Key]
         public int Id { get; set; }
 
         [Required, MaxLength(256)]

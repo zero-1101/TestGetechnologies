@@ -18,6 +18,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetSqLiteConnectionString())
 );
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", app =>
+    {
+        app.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

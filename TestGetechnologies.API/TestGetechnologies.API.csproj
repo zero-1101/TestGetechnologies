@@ -24,4 +24,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TestGetechnologies.Shared\TestGetechnologies.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
