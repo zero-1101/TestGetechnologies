@@ -4,7 +4,12 @@ using TestGetechnologies.API.DbConfig.Entities;
 
 namespace TestGetechnologies.API.DataAccess
 {
-    public class PersonaRepository : Repository<Persona>
+    public interface IPersonaRepository : IRepository<Persona>
+    {
+
+    }
+
+    public class PersonaRepository : Repository<Persona>, IPersonaRepository
     {
         public PersonaRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {

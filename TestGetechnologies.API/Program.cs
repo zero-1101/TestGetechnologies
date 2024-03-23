@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using TestGetechnologies.API.Business;
+using TestGetechnologies.API.DataAccess;
 using TestGetechnologies.API.DbConfig;
 using TestGetechnologies.API.Extensions;
 
@@ -27,6 +29,13 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod();
     });
 });
+
+//Repository services
+builder.Services.AddScoped<IPersonaRepository, PersonaRepository>();
+builder.Services.AddScoped<IFacturaRepository, FacturaRepository>();
+//Business servicess
+builder.Services.AddScoped<Directorio>();
+builder.Services.AddScoped<Ventas>();
 
 var app = builder.Build();
 

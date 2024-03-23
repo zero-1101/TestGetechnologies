@@ -5,17 +5,34 @@ namespace TestGetechnologies.API.Business
 {
     public class Directorio
     {
-        private readonly PersonaRepository _personaRepository;
+        private readonly IPersonaRepository _personaRepository;
 
-        public Directorio(PersonaRepository personaRepository)
+        public Directorio(IPersonaRepository personaRepository)
         {
             this._personaRepository = personaRepository;
         }
 
-        public List<Persona> FindPersonas()
+        public int GetTotalRows() => _personaRepository.GetAll().Count();
+
+        public List<Persona> FindPersonas(int? pageNumber)
         {
-            var personas = _personaRepository.GetAll().ToList();
-            return personas;
+            var personas = _personaRepository.GetAll();
+
+            if (pageNumber is null)
+            {
+                return personas.ToList();
+            }
+            pageNumber = pageNumber <= 0 ? 1 : pageNumber;
+            int pageSize = Constants.PageSize;
+            personas = personas.Skip(pageSize * (pageNumber.Value - 1)).Take(pageSize);
+            
+            return personas.ToList();
+        }
+
+        public async Task<Persona?> GetById(int id)
+        {
+            Persona? persona = await _personaRepository.GetById(id);
+            return persona;
         }
 
         public Persona? FindPersonaByIdentification(string identification)
@@ -39,18 +56,27 @@ namespace TestGetechnologies.API.Business
 
         public async Task<Persona?> CreatePersona(Persona persona)
         {
-            if (persona is null)
-            {
-                return null;
-            }
-
             Persona result = await _personaRepository.Create(persona);
             return result;
         }
 
-        public void UpdatePersona(Persona persona)
+        public async Task<bool> UpdatePersona(Persona persona)
         {
-            _personaRepository.Update(persona);
+            Persona personaUpdate = await _personaRepository.GetById(persona.Id);
+
+            if (personaUpdate is null)
+            {
+                return false;
+            }
+
+            personaUpdate.Nombre = persona.Nombre;
+            personaUpdate.ApellidoPaterno = persona.ApellidoPaterno;
+            personaUpdate.ApellidoMaterno = persona.ApellidoMaterno;
+            personaUpdate.Identificacion = persona.Identificacion;
+
+            _personaRepository.Update(personaUpdate);
+
+            return true;
         }
     }
 }

@@ -5,18 +5,38 @@ namespace TestGetechnologies.API.Business
 {
     public class Ventas
     {
-        private readonly FacturaRepository _facturaRepository;
+        private readonly IFacturaRepository _facturaRepository;
 
-        public Ventas(FacturaRepository facturaRepository)
+        public Ventas(IFacturaRepository facturaRepository)
         {
             this._facturaRepository = facturaRepository;
         }
 
-        public List<Factura> FindFacturasByPersona(int personaId)
+        public async Task<Factura?> GetById(int id)
+        {
+            Factura? factura = await _facturaRepository.GetById(id);
+            return factura;
+        }
+
+        public int GetTotalRowsByPersona(int personaId) => 
+            _facturaRepository.GetAll()
+            .Where(f => f.PersonaId == personaId).Count();
+
+        public List<Factura> FindFacturasByPersona(int personaId, int? pageNumber)
         {
             var facturas = _facturaRepository.GetAll()
-                .Where(f => f.PersonaId == personaId).ToList();
-            return facturas;
+                .Where(f => f.PersonaId == personaId);
+
+            if (pageNumber is null)
+            {
+                return facturas.ToList();
+            }
+
+            pageNumber = pageNumber <= 0 ? 1 : pageNumber;
+            int pageSize = Constants.PageSize;
+            facturas = facturas.Skip(pageSize * (pageNumber.Value - 1)).Take(pageSize);
+
+            return facturas.ToList();
         }
 
         public async Task<Factura?> CreateFactura(Factura factura)
@@ -30,9 +50,20 @@ namespace TestGetechnologies.API.Business
             return result;
         }
 
-        public void UpdateFactura(Factura factura)
+        public async Task<bool> UpdateFactura(Factura factura)
         {
-            _facturaRepository.Update(factura);
+            Factura facturaUpdate = await _facturaRepository.GetById(factura.Id);
+
+            if (facturaUpdate is null)
+            {
+                return false;
+            }
+
+            facturaUpdate.Fecha = factura.Fecha;
+            facturaUpdate.Monto = factura.Monto;
+
+            _facturaRepository.Update(facturaUpdate);
+            return true;
         }
     }
 }

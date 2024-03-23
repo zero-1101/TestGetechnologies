@@ -7,11 +7,30 @@ using System.Threading.Tasks;
 
 namespace TestGetechnologies.Shared
 {
-    public record FacturaDetail(
+    public record CreateFactura(
+        [Required]
+        DateTimeOffset Fecha,
+        [Required, Range(0, int.MaxValue)]
+        Decimal Monto,
+        [Required]
+        int PersonaId
+        );
+
+    public record UpdateFactura(
+        [Required]
         int Id,
         [Required]
         DateTimeOffset Fecha,
         [Required, Range(0, int.MaxValue)]
         Decimal Monto
         );
+
+    public record FacturaDetail(
+        int Id,
+        DateTimeOffset Fecha,
+        Decimal Monto,
+        int PersonaId
+        );
+
+    public record FacturaDetailPaginated(int totalRows, int pageNumber, int pageSize, List<FacturaDetail> facturas);
 }

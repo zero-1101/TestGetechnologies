@@ -38,12 +38,14 @@ namespace TestGetechnologies.API.DataAccess
         public async Task<T> Create(T entity)
         {
             EntityEntry<T> result = await Entities.AddAsync(entity);
+            await _context.SaveChangesAsync();
             return result.Entity;
         }
 
         public void Update(T entity)
         {
             Entities.Update(entity);
+            _context.SaveChanges();
         }
 
         public async Task<bool> Delete(int id)
@@ -56,6 +58,8 @@ namespace TestGetechnologies.API.DataAccess
             }
 
             Entities.Remove(entity);
+
+            await _context.SaveChangesAsync();
 
             return true;
         }
