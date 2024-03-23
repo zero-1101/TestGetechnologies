@@ -12,7 +12,9 @@ namespace TestGetechnologies.Shared
         public string Message { get; set; }
         public T? Value { get; set; } = default;
 
-        public ResponseApi<T> CreateSuccessResponse(T? value)
+        public List<string> Errors { get; set; } = new List<string>();
+
+        public ResponseApi<T> CreateSuccessResponse(T value)
         {
             return new ResponseApi<T> { IsSuccess = true, Message = "Ok", Value = value };
         }
@@ -27,9 +29,9 @@ namespace TestGetechnologies.Shared
             return new ResponseApi<T> { IsSuccess = false, Message = "Not Found", Value = default };
         }
 
-        public ResponseApi<T> CreateBadRequestResponse(T Errors)
+        public ResponseApi<T> CreateBadRequestResponse(List<string> errors)
         {
-            return new ResponseApi<T> { IsSuccess = false, Message = $"Bad Request", Value = Errors };
+            return new ResponseApi<T> { IsSuccess = false, Message = $"Bad Request", Value = default, Errors = errors };
         }
     }
 }

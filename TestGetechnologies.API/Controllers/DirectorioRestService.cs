@@ -11,14 +11,16 @@ namespace TestGetechnologies.API.Controllers
     public class DirectorioRestService : ControllerBase
     {
         private readonly Directorio _directorio;
+        private readonly ILogger<DirectorioRestService> _logger;
 
-        public DirectorioRestService(Directorio directorio)
+        public DirectorioRestService(Directorio directorio, ILogger<DirectorioRestService> logger)
         {
             this._directorio = directorio;
+            this._logger = logger;
         }
 
         [HttpGet("[action]")]
-        public IActionResult FindPersonas(int? pageNumber)
+        public ActionResult<ResponseApi<PersonaDetailPaginated>> FindPersonas(int? pageNumber)
         {
             try
             {
@@ -46,18 +48,18 @@ namespace TestGetechnologies.API.Controllers
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    new ResponseApi<bool?>().CreateInternalServerErrorResponse());
+                    new ResponseApi<PersonaDetailPaginated>().CreateInternalServerErrorResponse());
             }
         }
 
         [HttpGet("[action]/{identificacion}")]
-        public IActionResult FindPersonaByIdentificacion(string identificacion)
+        public ActionResult<ResponseApi<PersonaDetail>> FindPersonaByIdentificacion(string identificacion)
         {
             try
             {
                 if (string.IsNullOrEmpty(identificacion))
                 {
-                    return BadRequest(new ResponseApi<List<string>>()
+                    return BadRequest(new ResponseApi<PersonaDetail>()
                         .CreateBadRequestResponse(new List<string> { "identificacion cannot be empty" }));
                 }
 
@@ -65,30 +67,30 @@ namespace TestGetechnologies.API.Controllers
 
                 if (persona is null)
                 {
-                    return NotFound(new ResponseApi<PersonaDetail?>().CreateNotFoundResponse());
+                    return NotFound(new ResponseApi<PersonaDetail>().CreateNotFoundResponse());
                 }
 
                 PersonaDetail personaDetail = new PersonaDetail(
                     Id: persona.Id,Nombre: persona.Nombre, ApellidoPaterno: persona.ApellidoPaterno,
                     ApellidoMaterno: persona.ApellidoMaterno, Identificacion: persona.Identificacion
                     );
-                return Ok(new ResponseApi<PersonaDetail?>().CreateSuccessResponse(personaDetail));
+                return Ok(new ResponseApi<PersonaDetail>().CreateSuccessResponse(personaDetail));
             }
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    new ResponseApi<bool?>().CreateInternalServerErrorResponse());
+                    new ResponseApi<PersonaDetail>().CreateInternalServerErrorResponse());
             }
         }
 
         [HttpPost("[action]/{identificacion}")]
-        public async Task<IActionResult> DeletePersonaByIdentificacion(string identificacion)
+        public async Task<ActionResult<ResponseApi<bool>>> DeletePersonaByIdentificacion(string identificacion)
         {
             try
             {
                 if (string.IsNullOrEmpty(identificacion))
                 {
-                    return BadRequest(new ResponseApi<List<string>>()
+                    return BadRequest(new ResponseApi<bool>()
                         .CreateBadRequestResponse(new List<string> { "identificacion cannot be empty"}));
                 }
 
@@ -102,18 +104,20 @@ namespace TestGetechnologies.API.Controllers
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    new ResponseApi<bool?>().CreateInternalServerErrorResponse());
+                    new ResponseApi<bool>().CreateInternalServerErrorResponse());
             }
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> CreatePersona(CreatePersona persona)
+        public async Task<ActionResult<ResponseApi<PersonaDetail>>> CreatePersona(CreatePersona persona)
         {
             try
             {
                 if (persona is null)
                 {
-                    return BadRequest(new ResponseApi<List<string>>()
+                    _logger.LogWarning("Bad Request en Create Persona");
+
+                    return BadRequest(new ResponseApi<PersonaDetail>()
                         .CreateBadRequestResponse(new List<string> { "persona cannot be empty" }));
                 }
 
@@ -122,7 +126,9 @@ namespace TestGetechnologies.API.Controllers
                     List<string> errors = ModelState.Values
                         .SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();
 
-                    return BadRequest(new ResponseApi<List<string>>().CreateBadRequestResponse(errors));
+                    _logger.LogWarning("Bad Request en Create Persona");
+
+                    return BadRequest(new ResponseApi<PersonaDetail>().CreateBadRequestResponse(errors));
                 }
 
                 Persona personaCreate = new Persona
@@ -140,23 +146,27 @@ namespace TestGetechnologies.API.Controllers
                     ApellidoMaterno: result.ApellidoMaterno, Identificacion: result.Identificacion
                     );
 
+                _logger.LogInformation($"Persona creada correctamente");
+
                 return Ok(new ResponseApi<PersonaDetail>().CreateSuccessResponse(personaDetail));
             }
             catch (Exception e)
             {
+                _logger.LogError($"Error al crear Persona, ErrorMessage: {e.Message}");
+
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    new ResponseApi<bool?>().CreateInternalServerErrorResponse());
+                    new ResponseApi<PersonaDetail>().CreateInternalServerErrorResponse());
             }
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> UpdatePersona(UpdatePersona persona)
+        public async Task<ActionResult<ResponseApi<bool>>> UpdatePersona(UpdatePersona persona)
         {
             try
             {
                 if (persona is null)
                 {
-                    return BadRequest(new ResponseApi<List<string>>()
+                    return BadRequest(new ResponseApi<bool>()
                         .CreateBadRequestResponse(new List<string> { "persona cannot be empty" }));
                 }
 
@@ -165,7 +175,7 @@ namespace TestGetechnologies.API.Controllers
                     List<string> errors = ModelState.Values
                         .SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();
 
-                    return BadRequest(new ResponseApi<List<string>>().CreateBadRequestResponse(errors));
+                    return BadRequest(new ResponseApi<bool>().CreateBadRequestResponse(errors));
                 }
 
                 Persona personaUpdate = new Persona
@@ -181,7 +191,7 @@ namespace TestGetechnologies.API.Controllers
 
                 if (result == false)
                 {
-                    return BadRequest(new ResponseApi<List<string>>()
+                    return BadRequest(new ResponseApi<bool>()
                         .CreateBadRequestResponse(new List<string> { "The Persona Id is invalid or was not found" }));
                 }
 
@@ -190,7 +200,7 @@ namespace TestGetechnologies.API.Controllers
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    new ResponseApi<bool?>().CreateInternalServerErrorResponse());
+                    new ResponseApi<bool>().CreateInternalServerErrorResponse());
             }
         }
     }

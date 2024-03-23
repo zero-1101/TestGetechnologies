@@ -20,13 +20,13 @@ namespace TestGetechnologies.API.Controllers
         }
 
         [HttpGet("[action]/{PersonaId}")]
-        public IActionResult FindFacturasByPersona(int? PersonaId, int? pageNumber)
+        public ActionResult<ResponseApi<FacturaDetailPaginated>> FindFacturasByPersona(int? PersonaId, int? pageNumber)
         {
             try
             {
                 if (PersonaId is null)
                 {
-                    return BadRequest(new ResponseApi<List<string>>()
+                    return BadRequest(new ResponseApi<FacturaDetailPaginated?>()
                             .CreateBadRequestResponse(new List<string> { "PersonaId cannot be empty" }));
                 }
 
@@ -52,18 +52,18 @@ namespace TestGetechnologies.API.Controllers
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    new ResponseApi<bool?>().CreateInternalServerErrorResponse());
+                    new ResponseApi<FacturaDetailPaginated?>().CreateInternalServerErrorResponse());
             }
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> CreateFactura(CreateFactura factura)
+        public async Task<ActionResult<ResponseApi<FacturaDetail>>> CreateFactura(CreateFactura factura)
         {
             try
             {
                 if (factura is null)
                 {
-                    return BadRequest(new ResponseApi<List<string>>()
+                    return BadRequest(new ResponseApi<FacturaDetail>()
                         .CreateBadRequestResponse(new List<string> { "factura cannot be empty" }));
                 }
 
@@ -72,14 +72,14 @@ namespace TestGetechnologies.API.Controllers
                     List<string> errors = ModelState.Values
                         .SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();
 
-                    return BadRequest(new ResponseApi<List<string>>().CreateBadRequestResponse(errors));
+                    return BadRequest(new ResponseApi<FacturaDetail>().CreateBadRequestResponse(errors));
                 }
 
                 Persona? personaExists = await _directorio.GetById(factura.PersonaId); 
 
                 if (personaExists is null)
                 {
-                    return BadRequest(new ResponseApi<List<string>>()
+                    return BadRequest(new ResponseApi<FacturaDetail>()
                         .CreateBadRequestResponse(new List<string> { "The Persona Id is invalid or was not found" }));
                 }
 
@@ -99,18 +99,18 @@ namespace TestGetechnologies.API.Controllers
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    new ResponseApi<bool?>().CreateInternalServerErrorResponse());
+                    new ResponseApi<FacturaDetail>().CreateInternalServerErrorResponse());
             }
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> UpdateFactura(UpdateFactura factura)
+        public async Task<ActionResult<ResponseApi<bool>>> UpdateFactura(UpdateFactura factura)
         {
             try
             {
                 if (factura is null)
                 {
-                    return BadRequest(new ResponseApi<List<string>>()
+                    return BadRequest(new ResponseApi<bool>()
                         .CreateBadRequestResponse(new List<string> { "factura cannot be empty" }));
                 }
 
@@ -119,7 +119,7 @@ namespace TestGetechnologies.API.Controllers
                     List<string> errors = ModelState.Values
                         .SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();
 
-                    return BadRequest(new ResponseApi<List<string>>().CreateBadRequestResponse(errors));
+                    return BadRequest(new ResponseApi<bool>().CreateBadRequestResponse(errors));
                 }
                 
                 Factura? facturaExists = await _ventas.GetById(factura.Id);
@@ -135,7 +135,7 @@ namespace TestGetechnologies.API.Controllers
 
                 if (result == false)
                 {
-                    return BadRequest(new ResponseApi<List<string>>()
+                    return BadRequest(new ResponseApi<bool>()
                         .CreateBadRequestResponse(new List<string> { "The Factura Id is invalid or was not found" }));
                 }
 
@@ -144,7 +144,7 @@ namespace TestGetechnologies.API.Controllers
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    new ResponseApi<bool?>().CreateInternalServerErrorResponse());
+                    new ResponseApi<bool>().CreateInternalServerErrorResponse());
             }
         }
     }

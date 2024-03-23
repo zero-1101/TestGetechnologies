@@ -8,26 +8,32 @@ using System.Threading.Tasks;
 namespace TestGetechnologies.Shared
 {
     public record CreatePersona(
-        [Required, MaxLength(256)]
+        [Required(ErrorMessage = "El campo {0} es requerido"), MaxLength(256)]
         string Nombre,
-        [Required, MaxLength(256)]
+        [Display(Name = "Apellido Paterno")]
+        [Required(ErrorMessage = "El campo {0} es requerido"), MaxLength(256)]
         string ApellidoPaterno,
+        [Display(Name = "Apellido Materno")]
         [MaxLength(256)]
         string? ApellidoMaterno,
-        [Required, MaxLength(256)]
+        [Display(Name = "Identificación")]
+        [Required(ErrorMessage = "El campo {0} es requerido"), MaxLength(256)]
         string Identificacion
         );
 
     public record UpdatePersona(
         [Required]
         int Id,
-        [Required, MaxLength(256)]
+        [Required(ErrorMessage = "El campo {0} es requerido"), MaxLength(256)]
         string Nombre,
-        [Required, MaxLength(256)]
+        [Display(Name = "Apellido Paterno")]
+        [Required(ErrorMessage = "El campo {0} es requerido"), MaxLength(256)]
         string ApellidoPaterno,
+        [Display(Name = "Apellido Materno")]
         [MaxLength(256)]
         string? ApellidoMaterno,
-        [Required, MaxLength(256)]
+        [Display(Name = "Identificación")]
+        [Required(ErrorMessage = "El campo {0} es requerido"), MaxLength(256)]
         string Identificacion
         );
 

@@ -1,0 +1,56 @@
+﻿@page
+@model TestGetechnologies.Client.Pages.Directorio.CreatePersonaModel
+@{
+    ViewData["Title"] = "Create Persona";
+}
+
+@if (TempData["IsSuccess"] != null)
+{
+    string alertClass = (bool)TempData["IsSuccess"] == true ? "alert-success" : "alert-danger";
+
+    <div class="alert @alertClass alert-dismissible fade show" role="alert">
+        @Html.Raw(TempData["Message"])
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (ViewData.ModelState.Keys.Contains("ErrorMessage"))
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @Html.ValidationMessage("ErrorMessage")
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<form action="" method="post" class="row">
+    <div class="col-md-6 text-center px-4 py-md-5">
+        <img src="~/assets/default_image.jpg" alt="default_image.jpg" class="img-fluid img-thumbnail" />
+    </div>
+    <div class="col-md-6 px-4 py-md-5">
+        <div class="row g-3">
+            <div class="col-md-12">
+                <label class="form-label" asp-for="CreatePersona.Nombre"></label>
+                <input class="form-control" type="text" asp-for="CreatePersona.Nombre" />
+                <span class="text-danger" asp-validation-for="CreatePersona.Nombre"></span>
+            </div>
+            <div class="col-md-12">
+                <label class="form-label" asp-for="CreatePersona.ApellidoPaterno">Apellido Paterno</label>
+                <input class="form-control" type="text" asp-for="CreatePersona.ApellidoPaterno" />
+                <span class="text-danger" asp-validation-for="CreatePersona.ApellidoPaterno"></span>
+            </div>
+            <div class="col-md-12">
+                <label class="form-label" asp-for="CreatePersona.ApellidoMaterno">Apellido Materno</label>
+                <input class="form-control" type="text" asp-for="CreatePersona.ApellidoMaterno" />
+                <span class="text-danger" asp-validation-for="CreatePersona.ApellidoMaterno"></span>
+            </div>
+            <div class="col-md-12">
+                <label class="form-label" asp-for="CreatePersona.Identificacion">Identificación</label>
+                <input class="form-control" type="text" asp-for="CreatePersona.Identificacion" />
+                <span class="text-danger" asp-validation-for="CreatePersona.Identificacion"></span>
+            </div>
+            <div class="col-md-12 text-center">
+                <button class="btn btn-success">Guardar</button>
+            </div>
+        </div>
+    </div>
+</form>

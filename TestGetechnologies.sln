@@ -5,7 +5,9 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestGetechnologies.API", "TestGetechnologies.API\TestGetechnologies.API.csproj", "{CDBCFE12-A301-487F-B707-56C0899E0ED0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGetechnologies.Shared", "TestGetechnologies.Shared\TestGetechnologies.Shared.csproj", "{33CB066B-1320-420A-86A0-B2E0DC34026D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestGetechnologies.Shared", "TestGetechnologies.Shared\TestGetechnologies.Shared.csproj", "{33CB066B-1320-420A-86A0-B2E0DC34026D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGetechnologies.Client", "TestGetechnologies.Client\TestGetechnologies.Client.csproj", "{6A8666E6-A6A6-4261-829F-F773582CF5CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{33CB066B-1320-420A-86A0-B2E0DC34026D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33CB066B-1320-420A-86A0-B2E0DC34026D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33CB066B-1320-420A-86A0-B2E0DC34026D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A8666E6-A6A6-4261-829F-F773582CF5CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A8666E6-A6A6-4261-829F-F773582CF5CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A8666E6-A6A6-4261-829F-F773582CF5CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A8666E6-A6A6-4261-829F-F773582CF5CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

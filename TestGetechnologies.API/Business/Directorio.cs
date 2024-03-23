@@ -43,7 +43,7 @@ namespace TestGetechnologies.API.Business
 
         public async Task<bool> DeletePersonaByIdentification(string identification)
         {
-            Persona? persona = _personaRepository.GetAll().SingleOrDefault(p => p.Identificacion == identification);
+            Persona? persona = _personaRepository.GetAll().FirstOrDefault(p => p.Identificacion == identification);
 
             if (persona is null)
             {
