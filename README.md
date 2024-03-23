@@ -1,5 +1,7 @@
 ## Proyecto TestGetechnologies
 
+Es necesario tener instalado el SDK de .NET 6 para ejecutar los proyectos `https://dotnet.microsoft.com/en-us/download/dotnet/6.0`
+
 **Como Ejecutar el proyecto con Visual Studio 2022**
 
 -Clonar el proyecto.
