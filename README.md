@@ -6,14 +6,14 @@ Es necesario tener instalado el SDK de .NET 6 para ejecutar los proyectos `https
 
 -Clonar el proyecto.
 
-- Abrir la solucion `TestGetechnologies.sln` con visual studio 2022.
+- Abrir la solución `TestGetechnologies.sln` con Visual Studio 2022.
 
-- Primero ejecutar el proyecto API dando clic derecho sobre el proyecto `TestGetechnologies.API`, luego dirigirse a la opcion `Debug` y clic en `Start New Instance`.
+- Primero, ejecute el proyecto API dando clic derecho sobre el proyecto `TestGetechnologies.API`, luego dirigirse a la opción `Debug` y clic en `Start New Instance`.
 
-- Despues ejecutar el proyecto Cliente dando clic derecho sobre el proyecto `TestGetechnologies.Client`, luego dirigirse a la opcion `Debug` y clic en `Start New Instance`.
+- Después, ejecute el proyecto Cliente dando clic derecho sobre el proyecto `TestGetechnologies.Client`, luego dirigirse a la opción `Debug` y clic en `Start New Instance`.
 
-- Una vez echo esto se abrira el formulario para crear una Persona, este formulario consume el endpoint `/api/DirectorioRestService/CreatePersona` del proyecto Web Api.
+- Una vez hecho esto, se abrirá el formulario para crear una Persona. Este formulario consume el endpoint `/api/DirectorioRestService/CreatePersona` del proyecto Web API.
 
-Se pueden probar los enpoints del proyecto web Api desde la pagina de Swagger incluida en el proyecto desde la direccion `http://localhost:5123/swagger/index.html` o desde Postman.
+Se pueden probar los enpoints del proyecto web API desde la página de Swagger incluida en el proyecto desde la dirección `http://localhost:5123/swagger/index.html` o desde Postman.
 
-Se agrego un logger en el Endpoint `/api/DirectorioRestService/CreatePersona` y se puede ver en la consola cuando una Persona es creada correctamente.
+Se agregó un logger en el Endpoint `/api/DirectorioRestService/CreatePersona` y se puede ver en la consola cuando una Persona es creada correctamente.
