@@ -10,7 +10,7 @@ namespace TestGetechnologies.API.DbConfig
 
         }
 
-        DbSet<Persona> Persona { get; set; }
-        DbSet<Factura> Factura { get; set; }
+        public DbSet<Persona> Persona { get; set; }
+        public DbSet<Factura> Factura { get; set; }
     }
 }
